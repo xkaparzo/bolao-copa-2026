@@ -1,10 +1,11 @@
 import type { NextConfig } from "next";
 
+// Build: force fresh compile with Supabase env vars
 const nextConfig: NextConfig = {
   images: {
     domains: [],
   },
-  // Permitir que o cron job do Vercel chame a API
+  // Permitir que o cron job chame a API
   async headers() {
     return [
       {
