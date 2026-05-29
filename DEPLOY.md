@@ -96,15 +96,29 @@ Para que a sincronização automática funcione, você precisa associar cada jog
 
 ---
 
-## Cron Job (automático)
+## Cron Job Automático — cron-job.org (GRÁTIS)
 
-O `vercel.json` já configura o cron para rodar a cada 30 minutos:
-```json
-{ "crons": [{ "path": "/api/sync-scores", "schedule": "*/30 * * * *" }] }
-```
+> ⚠️ O plano Hobby do Vercel **não permite** cron jobs com frequência maior que 1x/dia.
+> A solução é usar o **cron-job.org** — serviço gratuito que chama sua URL periodicamente.
 
-Isso exige o **plano Hobby do Vercel** (gratuito, mas com limitações) ou **Pro**.
-Se preferir 100% manual, basta usar o botão "Sincronizar Agora" no painel Admin.
+### Passos para configurar
+
+1. Acesse [cron-job.org](https://cron-job.org) → crie uma conta gratuita
+2. Clique em **Create cronjob**
+3. Preencha assim:
+
+   | Campo | Valor |
+   |---|---|
+   | **URL** | `https://SEU-PROJETO.vercel.app/api/sync-scores` |
+   | **Schedule** | A cada 30 minutos |
+   | **Request Method** | `POST` |
+   | **Header: Authorization** | `Bearer abc123xyz` *(mesmo valor do `CRON_SECRET`)* |
+
+4. Salve ✔️
+
+O cron-job.org vai chamar sua API a cada 30 minutos automaticamente — **100% grátis**.
+
+> 💡 Se preferir não configurar o cron externo, use o botão **“Sincronizar Agora”** no painel Admin para atualizar os placares manualmente quando quiser.
 
 ---
 
@@ -127,6 +141,5 @@ bolao-copa-2026/
 ├── lib/
 │   └── supabase.ts         # Cliente Supabase + tipos
 ├── supabase/
-│   └── schema.sql          # Schema completo do banco
-└── vercel.json             # Config do cron job
+└──   schema.sql          # Schema completo do banco
 ```
